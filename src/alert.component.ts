@@ -10,7 +10,7 @@ import { DatetimePickerAlertOptions } from "./alert.options";
   template: `
     <ion-backdrop (click)="bdClick()" [class.backdrop-no-tappable]="!d.enableBackdropDismiss"></ion-backdrop>
     <div class="alert-wrapper ion-datetime-picker-wrapper">
-      <div class="alert-head">
+      <div class="alert-head" *ngIf="d.title">
         <h2 id="{{hdrId}}" class="alert-title" *ngIf="d.title" [innerHTML]="d.title"></h2>
         <h3 id="{{subHdrId}}" class="alert-sub-title" *ngIf="d.subTitle" [innerHTML]="d.subTitle"></h3>
       </div>

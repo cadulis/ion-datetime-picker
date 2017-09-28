@@ -32,11 +32,11 @@ export class DatetimePickerDirective {
 
     const pickerOptions: DatetimePickerAlertOptions = deepCopy(this.input.pickerOptions);
 
-    pickerOptions.dateEnabled = this.date !== undefined && this.date !== "false";
-    pickerOptions.timeEnabled = this.time !== undefined && this.time !== "false";
-    pickerOptions.isMondayFirst = this.mondayFirst !== undefined && this.mondayFirst !== "false";
-    pickerOptions.secondsEnabled = this.seconds !== undefined && this.seconds !== "false";
-    pickerOptions.meridiemEnabled = this.amPm !== undefined && this.amPm !== "false";
+    pickerOptions.dateEnabled = this.date !== undefined && this.date !== false;
+    pickerOptions.timeEnabled = this.time !== undefined && this.time !== false;
+    pickerOptions.isMondayFirst = this.mondayFirst !== undefined && this.mondayFirst !== false;
+    pickerOptions.secondsEnabled = this.seconds !== undefined && this.seconds !== false;
+    pickerOptions.meridiemEnabled = this.amPm !== undefined && this.amPm !== false;
     pickerOptions.onlyValid = this.onlyValid;
 
     if (pickerOptions.dateEnabled === false && pickerOptions.timeEnabled === false) {
@@ -46,7 +46,9 @@ export class DatetimePickerDirective {
     pickerOptions.monthNames = this.input._locale.monthNames || ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     pickerOptions.weekdayNames = this.input._locale.dayShortNames || ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
-    pickerOptions.title = this.title || ("Pick " + (pickerOptions.dateEnabled ? "a date" : "") + (pickerOptions.dateEnabled && pickerOptions.timeEnabled ? " and " : "") + (pickerOptions.timeEnabled ? "a time" : ""));
+    if (this.title) {
+      pickerOptions.title = this.title || ("Pick " + (pickerOptions.dateEnabled ? "a date" : "") + (pickerOptions.dateEnabled && pickerOptions.timeEnabled ? " and " : "") + (pickerOptions.timeEnabled ? "a time" : ""));
+    }
     pickerOptions.subTitle = this.subTitle;
 
     let val = this.input.value || {};
@@ -56,7 +58,7 @@ export class DatetimePickerDirective {
       val.month ? val.month - 1 : (pickerOptions.dateEnabled ? now.getMonth() : 0),
       val.day || (pickerOptions.dateEnabled ? now.getDate() : 1),
       val.hour || (pickerOptions.timeEnabled ? now.getHours() : 0),
-      val.minute || (pickerOptions.timeEnabled ? now.getMinutes() : 0),
+      val.minute !== undefined ? val.minute : (pickerOptions.timeEnabled ? now.getMinutes() : 0),
       val.second || (pickerOptions.timeEnabled && pickerOptions.secondsEnabled ? now.getSeconds() : 0),
     );
 

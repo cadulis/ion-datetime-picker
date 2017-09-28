@@ -31,7 +31,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
         <div class="weekday">{{weekdayNames[weekday]}}</div>
       </div>
     </div>
-    <div *ngIf="dateEnabled">
+    <div *ngIf="dateEnabled" class="calendar month">
       <div class="row calendar days" *ngFor="let y of rows">
         <div class="col" *ngFor="let x of cols">
           <div [hidden]="isDayHidden(x, y)"
@@ -163,6 +163,9 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
     }
     .calendar .weekday {
       font-weight: bold;
+    }
+    .month {
+      min-height: 220px;
     }
 
     .month-year {
