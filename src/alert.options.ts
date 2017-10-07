@@ -10,4 +10,5 @@ export interface DatetimePickerAlertOptions extends AlertOptions {
   onlyValid?: any;
   monthNames?: string[];
   weekdayNames?: string[];
+  minuteValues?: number;
 }

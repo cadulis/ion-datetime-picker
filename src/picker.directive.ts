@@ -45,6 +45,7 @@ export class DatetimePickerDirective {
 
     pickerOptions.monthNames = this.input._locale.monthNames || ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     pickerOptions.weekdayNames = this.input._locale.dayShortNames || ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+    pickerOptions.minuteValues = this.input.minuteValues || 1;
 
     if (this.title) {
       pickerOptions.title = this.title || ("Pick " + (pickerOptions.dateEnabled ? "a date" : "") + (pickerOptions.dateEnabled && pickerOptions.timeEnabled ? " and " : "") + (pickerOptions.timeEnabled ? "a time" : ""));
@@ -57,9 +58,9 @@ export class DatetimePickerDirective {
       val.year || (pickerOptions.dateEnabled ? now.getFullYear() : 2018),
       val.month ? val.month - 1 : (pickerOptions.dateEnabled ? now.getMonth() : 0),
       val.day || (pickerOptions.dateEnabled ? now.getDate() : 1),
-      val.hour || (pickerOptions.timeEnabled ? now.getHours() : 0),
-      val.minute !== undefined ? val.minute : (pickerOptions.timeEnabled ? now.getMinutes() : 0),
-      val.second || (pickerOptions.timeEnabled && pickerOptions.secondsEnabled ? now.getSeconds() : 0),
+      val.hour !== undefined ? val.hour : (pickerOptions.dateEnabled ? now.getHours() : 0),
+      val.minute !== undefined ? val.minute : (pickerOptions.dateEnabled ? now.getMinutes() : 0),
+      val.second !== undefined ? val.second : (pickerOptions.dateEnabled ? now.getSeconds() : 0),
     );
 
     const picker = this.datetimePickerAlertController.create(pickerOptions);

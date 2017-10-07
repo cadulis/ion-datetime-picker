@@ -5,7 +5,9 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
   template: `
     <div *ngIf="dateEnabled" class="row month-year">
       <div class="col left-arrow" col-auto>
-        <button type="button" ion-button icon-only clear (click)="changeBy(-1, 'month')"><ion-icon name="arrow-back"></ion-icon></button>
+        <button type="button" ion-button icon-only clear (click)="changeBy('month', '-')">
+          <ion-icon name="arrow-back"></ion-icon>
+        </button>
       </div>
       <label class="col month-input">
         <div class="item item-input item-select">
@@ -22,7 +24,9 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
         </div>
       </label>
       <div class="col right-arrow" col-auto>
-        <button type="button" ion-button icon-only clear (click)="changeBy(+1, 'month')"><ion-icon name="arrow-forward"></ion-icon></button>
+        <button type="button" ion-button icon-only clear (click)="changeBy('month')">
+          <ion-icon name="arrow-forward"></ion-icon>
+        </button>
       </div>
     </div>
 
@@ -45,13 +49,29 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
 
     <div *ngIf="timeEnabled" class="row time-buttons">
       <div class="col"></div>
-      <div class="col" col-2><button type="button" ion-button icon-only clear (click)="changeBy(+1, 'hour')"><ion-icon name="arrow-up"></ion-icon></button></div>
+      <div class="col" col-2>
+        <button type="button" ion-button icon-only clear (click)="changeBy('hour')">
+          <ion-icon name="arrow-up"></ion-icon>
+        </button>
+      </div>
       <div class="col"></div>
-      <div class="col" col-2><button type="button" ion-button icon-only clear (click)="changeBy(+1, 'minute')"><ion-icon name="arrow-up"></ion-icon></button></div>
+      <div class="col" col-2>
+        <button type="button" ion-button icon-only clear (click)="changeBy('minute')">
+          <ion-icon name="arrow-up"></ion-icon>
+        </button>
+      </div>
       <div *ngIf="secondsEnabled" class="col"></div>
-      <div *ngIf="secondsEnabled" class="col" col-2><button type="button" ion-button icon-only clear (click)="changeBy(+1, 'second')"><ion-icon name="arrow-up"></ion-icon></button></div>
+      <div *ngIf="secondsEnabled" class="col" col-2>
+        <button type="button" ion-button icon-only clear (click)="changeBy('second')">
+          <ion-icon name="arrow-up"></ion-icon>
+        </button>
+      </div>
       <div *ngIf="meridiemEnabled" class="col"></div>
-      <div *ngIf="meridiemEnabled" class="col" col-2><button type="button" ion-button icon-only clear (click)="changeBy(+12, 'hour')"><ion-icon name="arrow-up"></ion-icon></button></div>
+      <div *ngIf="meridiemEnabled" class="col" col-2>
+        <button type="button" ion-button icon-only clear (click)="change('meridiem')">
+          <ion-icon name="arrow-up"></ion-icon>
+        </button>
+      </div>
       <div class="col"></div>
     </div>
     <div *ngIf="timeEnabled" class="row time">
@@ -59,7 +79,8 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
       <label class="col" col-2>
         <div class="item item-input">
           <div>
-            <input type="text" [(ngModel)]="bind.hour" pattern="0?([01]?[0-9]|2[0-3])" (change)="change('hour')" (blur)="changed()" required>
+            <input type="text" [(ngModel)]="bind.hour" min="0" max="23" maxlength="2" pattern="0?([01]?[0-9]|2[0-3])" required 
+              (change)="change('hour')" (blur)="changed()" />
           </div>
         </div>
       </label>
@@ -67,7 +88,8 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
       <label class="col" col-2>
         <div class="item item-input">
           <div>
-            <input type="text" [(ngModel)]="bind.minute" pattern="0?[0-5]?[0-9]" (change)="change('minute')" (blur)="changed()" required>
+            <input type="number" [(ngModel)]="bind.minute" min="0" max="59" step="{{ minuteValues }}" maxlength="2" 
+              required (change)="change('minute')" (blur)="changed()" />
           </div>
         </div>
       </label>
@@ -75,7 +97,8 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
       <label *ngIf="secondsEnabled" class="col" col-2>
         <div class="item item-input">
           <div>
-            <input type="text" [(ngModel)]="bind.second" pattern="0?[0-5]?[0-9]" (change)="change('second')" (blur)="changed()" required>
+            <input type="text" [(ngModel)]="bind.second" min="0" max="59" maxlength="2" pattern="0?[0-5]?[0-9]" required 
+              (change)="change('second')" (blur)="changed()" />
           </div>
         </div>
       </label>
@@ -83,7 +106,8 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
       <label *ngIf="meridiemEnabled" class="col" col-2>
         <div class="item item-input">
           <div>
-            <input type="text" [(ngModel)]="bind.meridiem" pattern="[aApP][mM]" (change)="change('meridiem')" (blur)="changed()" required>
+            <input type="text" [(ngModel)]="bind.meridiem" pattern="[aApP][mM]" required  
+              (change)="change('meridiem')" (blur)="changed()" />
           </div>
         </div>
       </label>
@@ -91,13 +115,29 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
     </div>
     <div *ngIf="timeEnabled" class="row time-buttons">
       <div class="col"></div>
-      <div class="col" col-2><button type="button" ion-button icon-only clear (click)="changeBy(-1, 'hour')"><ion-icon name="arrow-down"></ion-icon></button></div>
+      <div class="col" col-2>
+        <button type="button" ion-button icon-only clear (click)="changeBy('hour', '-')">
+          <ion-icon name="arrow-down"></ion-icon>
+        </button>
+      </div>
       <div class="col"></div>
-      <div class="col" col-2><button type="button" ion-button icon-only clear (click)="changeBy(-1, 'minute')"><ion-icon name="arrow-down"></ion-icon></button></div>
+      <div class="col" col-2>
+        <button type="button" ion-button icon-only clear (click)="changeBy('minute', '-')">
+          <ion-icon name="arrow-down"></ion-icon>
+        </button>
+      </div>
       <div *ngIf="secondsEnabled" class="col"></div>
-      <div *ngIf="secondsEnabled" class="col" col-2><button type="button" ion-button icon-only clear (click)="changeBy(-1, 'second')"><ion-icon name="arrow-down"></ion-icon></button></div>
+      <div *ngIf="secondsEnabled" class="col" col-2>
+        <button type="button" ion-button icon-only clear (click)="changeBy('second', '-')">
+          <ion-icon name="arrow-down"></ion-icon>
+        </button>
+      </div>
       <div *ngIf="meridiemEnabled" class="col"></div>
-      <div *ngIf="meridiemEnabled" class="col" col-2><button type="button" ion-button icon-only clear (click)="changeBy(-12, 'hour')"><ion-icon name="arrow-down"></ion-icon></button></div>
+      <div *ngIf="meridiemEnabled" class="col" col-2>
+        <button type="button" ion-button icon-only clear (click)="change('meridiem')">
+          <ion-icon name="arrow-down"></ion-icon>
+        </button>
+      </div>
       <div class="col"></div>
     </div>
   `,
@@ -225,6 +265,7 @@ export class DatetimePickerComponent implements OnInit {
   @Input() public secondsEnabled: boolean;
   @Input() public meridiemEnabled: boolean;
   @Input() public onlyValid: any;
+  @Input() public minuteValues: any;
   @Input() public monthNames: string[];
   @Input() public weekdayNames: string[];
   @Output() public pickerChange = new EventEmitter<Date>();
@@ -308,41 +349,51 @@ export class DatetimePickerComponent implements OnInit {
     this.hour = this.timeEnabled ? date.getHours() : 0;
     this.minute = this.timeEnabled ? date.getMinutes() : 0;
     this.second = this.secondsEnabled ? date.getSeconds() : 0;
+    this.meridiem = this.hour < 12 ? "AM" : "PM";
 
     this.changeViewData();
   }
 
-  public changeBy(value: number, unit: "year" | "month" | "hour" | "minute" | "second"): void {
-    if (+value) {
-      // DST workaround
-      if ((unit === "hour" || unit === "minute") && value === -1) {
-        let date = new Date(this.year, this.month, this.day, this.hour - 1, this.minute);
-        if ((this.minute === 0 || unit === "hour") && this.hour === date.getHours()) {
-          this.hour--;
-        }
+  public changeBy(unit: "year" | "month" | "hour" | "minute" | "second", operation = "+", value: number = 1): void {
+    // DST workaround
+    if ((unit === "hour" || unit === "minute") && operation === "-" && value === 1) {
+      let date = new Date(this.year, this.month, this.day, this.hour - 1, this.minute);
+      if ((this.minute === 0 || unit === "hour") && this.hour === date.getHours()) {
+        this.hour--;
       }
-      this[unit] += +value;
-      if (unit === "month" || unit === "year") {
-        this.day = Math.min(this.day, this.getDaysInMonth(this.year, this.month));
-      }
-      this.changeViewData();
     }
+    if (unit === "minute") {
+      value = this.minuteValues;
+    }
+    if (operation === "-") {
+      this[unit] -= value;
+    } else {
+      this[unit] += value;
+    }
+    if (unit === "month" || unit === "year") {
+      this.day = Math.min(this.day, this.getDaysInMonth(this.year, this.month));
+    }
+    this.changeViewData();
   }
 
   public change(unit: "year" | "month" | "hour" | "minute" | "second" | "meridiem"): void {
     let value = this.bind[unit];
     if (value && unit === "meridiem") {
       value = (value as string).toUpperCase();
-      if (value === "AM" && this.meridiem === "PM") {
-        this.hour -= 12;
-      } else if (value === "PM" && this.meridiem === "AM") {
+      if (value === "AM") {
+        this.meridiem = "PM";
         this.hour += 12;
+      } else if (value === "PM") {
+        this.meridiem = "AM";
+        this.hour -= 12;
       }
       this.changeViewData();
     } else if (+value || +value === 0) {
       this[unit] = +value;
       if (unit === "month" || unit === "year") {
         this.day = Math.min(this.day, this.getDaysInMonth(this.year, this.month));
+      } else if (unit === "hour") {
+        this.hour = !this.meridiemEnabled ? this.hour : (this.meridiem === "AM" ? this.hour % 12 : this.hour % 12 + 12);
       }
       this.changeViewData();
     }
@@ -454,14 +505,15 @@ export class DatetimePickerComponent implements OnInit {
   }
 
   private triggerChange(): void {
-    this.pickerChange.emit(new Date(
+    const newDate = new Date(
       this.year,
       this.month,
       this.day,
       this.hour,
       this.minute,
       this.second,
-    ));
+    );
+    this.pickerChange.emit(newDate);
   }
 
   private setNextValidDate(date: Date, dayToAdd?: number): void {
@@ -517,12 +569,12 @@ export class DatetimePickerComponent implements OnInit {
       this.hour = date.getHours();
       this.minute = date.getMinutes();
       this.second = date.getSeconds();
-      this.meridiem = this.hour < 12 ? "AM" : "PM";
-
-      this.bind.hour = this.meridiemEnabled ? (this.hour % 12 || 12).toString() : this.hour.toString();
-      this.bind.minute = (this.minute < 10 ? "0" : "") + this.minute.toString();
-      this.bind.second = (this.second < 10 ? "0" : "") + this.second.toString();
-      this.bind.meridiem = this.meridiem;
+      this.bind.hour = this.meridiemEnabled ? (this.hour % 12 || 12).toString() : this.addZero(this.hour.toString());
+      this.bind.minute = this.addZero(this.minute.toString());
+      this.bind.second = this.addZero(this.second.toString());
+      if (this.meridiemEnabled) {
+        this.bind.meridiem = this.meridiem;
+      }
     }
 
     this.triggerChange();
@@ -540,5 +592,12 @@ export class DatetimePickerComponent implements OnInit {
     }
     date.setHours(0, 0, 0, 0);
     return date;
+  }
+
+  private addZero(i: any) {
+      if (i < 10) {
+          i = "0" + i;
+      }
+      return i;
   }
 }
