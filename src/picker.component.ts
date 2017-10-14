@@ -150,11 +150,10 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
 
     input, select {
       width: 100%;
-      height: 100%;
       max-width: none;
       text-align: center;
       padding: .1em 5px 0;
-      min-height: 25px;
+      height: 25px;
 
       position: absolute;
       top: 0;
@@ -254,6 +253,9 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
     }
     .time input {
       font-size: 1.2em;
+    }
+    .row.time {
+        height: 25px;
     }
   `],
   encapsulation: ViewEncapsulation.Emulated,
