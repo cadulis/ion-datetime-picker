@@ -154,6 +154,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
       max-width: none;
       text-align: center;
       padding: .1em 5px 0;
+      min-height: 25px;
 
       position: absolute;
       top: 0;
