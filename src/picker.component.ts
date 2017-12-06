@@ -79,7 +79,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
       <label class="col" col-2>
         <div class="item item-input">
           <div>
-            <input type="text" [(ngModel)]="bind.hour" min="0" max="23" maxlength="2" pattern="0?([01]?[0-9]|2[0-3])" required 
+            <input type="text" [(ngModel)]="bind.hour" min="0" max="23" maxlength="2" pattern="0?([01]?[0-9]|2[0-3])" required
               (change)="change('hour')" (blur)="changed()" />
           </div>
         </div>
@@ -88,7 +88,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
       <label class="col" col-2>
         <div class="item item-input">
           <div>
-            <input type="number" [(ngModel)]="bind.minute" min="0" max="59" step="{{ minuteValues }}" maxlength="2" 
+            <input type="number" [(ngModel)]="bind.minute" min="0" max="59" step="{{ minuteValues }}" maxlength="2"
               required (change)="change('minute')" (blur)="changed()" />
           </div>
         </div>
@@ -97,7 +97,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
       <label *ngIf="secondsEnabled" class="col" col-2>
         <div class="item item-input">
           <div>
-            <input type="text" [(ngModel)]="bind.second" min="0" max="59" maxlength="2" pattern="0?[0-5]?[0-9]" required 
+            <input type="text" [(ngModel)]="bind.second" min="0" max="59" maxlength="2" pattern="0?[0-5]?[0-9]" required
               (change)="change('second')" (blur)="changed()" />
           </div>
         </div>
@@ -106,7 +106,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
       <label *ngIf="meridiemEnabled" class="col" col-2>
         <div class="item item-input">
           <div>
-            <input type="text" [(ngModel)]="bind.meridiem" pattern="[aApP][mM]" required  
+            <input type="text" [(ngModel)]="bind.meridiem" pattern="[aApP][mM]" required
               (change)="change('meridiem')" (blur)="changed()" />
           </div>
         </div>
@@ -312,7 +312,7 @@ export class DatetimePickerComponent implements OnInit {
     second: this.second,
     date: new Date(),
     getDateWithoutTime() {
-      let tempDate = new Date(this.date);
+      const tempDate = new Date(this.date);
       tempDate.setHours(0, 0, 0, 0);
       return tempDate;
     },
@@ -320,7 +320,7 @@ export class DatetimePickerComponent implements OnInit {
 
   public ngOnInit() {
     if (this.dateEnabled) {
-      let today = new Date();
+      const today = new Date();
       this.today = {
         day: today.getDate(),
         month: today.getMonth(),
@@ -340,12 +340,12 @@ export class DatetimePickerComponent implements OnInit {
   }
 
   public isDayHidden(x: number, y: number): boolean {
-    let cellDay = this.cellDay(x, y);
+    const cellDay = this.cellDay(x, y);
     return cellDay <= 0 || cellDay > this.daysInMonth;
   }
 
   public processModel(): void {
-    let date = this.modelDate instanceof Date ? this.modelDate : new Date();
+    const date = this.modelDate instanceof Date ? this.modelDate : new Date();
     this.year = this.dateEnabled ? date.getFullYear() : 0;
     this.month = this.dateEnabled ? date.getMonth() : 0;
     this.day = this.dateEnabled ? date.getDate() : 0;
@@ -360,7 +360,7 @@ export class DatetimePickerComponent implements OnInit {
   public changeBy(unit: "year" | "month" | "hour" | "minute" | "second", operation = "+", value: number = 1): void {
     // DST workaround
     if ((unit === "hour" || unit === "minute") && operation === "-" && value === 1) {
-      let date = new Date(this.year, this.month, this.day, this.hour - 1, this.minute);
+      const date = new Date(this.year, this.month, this.day, this.hour - 1, this.minute);
       if ((this.minute === 0 || unit === "hour") && this.hour === date.getHours()) {
         this.hour--;
       }
@@ -412,14 +412,14 @@ export class DatetimePickerComponent implements OnInit {
       return true;
     }
 
-    let currentDate = new Date(this.year, this.month, day);
-    let constraints = [].concat(this.onlyValid);
+    const currentDate = new Date(this.year, this.month, day);
+    const constraints = [].concat(this.onlyValid);
 
     return constraints.every((currentRule) => {
       let isValid = true;
 
       if (currentRule.after) {
-        let afterDate = this.createDate(currentRule.after);
+        const afterDate = this.createDate(currentRule.after);
         if (currentRule.inclusive) {
           isValid = currentDate >= afterDate;
           if (!isValid && computeNextValidDate) {
@@ -433,7 +433,7 @@ export class DatetimePickerComponent implements OnInit {
         }
 
       } else if (currentRule.before) {
-        let beforeDate = this.createDate(currentRule.before);
+        const beforeDate = this.createDate(currentRule.before);
 
         if (currentRule.inclusive) {
           isValid = currentDate <= beforeDate;
@@ -448,8 +448,8 @@ export class DatetimePickerComponent implements OnInit {
         }
 
       } else if (currentRule.between) {
-        let initialDate = this.createDate(currentRule.between.initial);
-        let finalDate = this.createDate(currentRule.between.final);
+        const initialDate = this.createDate(currentRule.between.initial);
+        const finalDate = this.createDate(currentRule.between.final);
 
         if (currentRule.inclusive) {
           isValid = currentDate >= initialDate && currentDate <= finalDate;
@@ -472,13 +472,13 @@ export class DatetimePickerComponent implements OnInit {
         }
 
       } else if (currentRule.outside) {
-        let initialDate = this.createDate(currentRule.outside.initial);
-        let finalDate = this.createDate(currentRule.outside.final);
+        const initialDate = this.createDate(currentRule.outside.initial);
+        const finalDate = this.createDate(currentRule.outside.final);
 
         if (currentRule.inclusive) {
           isValid = currentDate <= initialDate || currentDate >= finalDate;
           if (!isValid && computeNextValidDate) {
-            let lastValidDate = this.lastDateSet.getDateWithoutTime();
+            const lastValidDate = this.lastDateSet.getDateWithoutTime();
             if (lastValidDate <= initialDate) {
               this.setNextValidDate(finalDate, 0);
             } else if (lastValidDate >= finalDate) {
@@ -488,7 +488,7 @@ export class DatetimePickerComponent implements OnInit {
         } else {
           isValid = currentDate < initialDate || currentDate > finalDate;
           if (!isValid && computeNextValidDate) {
-            let lastValidDate = this.lastDateSet.getDateWithoutTime();
+            const lastValidDate = this.lastDateSet.getDateWithoutTime();
             if (lastValidDate < initialDate) {
               this.setNextValidDate(finalDate, 1);
             } else if (lastValidDate > finalDate) {
@@ -536,7 +536,7 @@ export class DatetimePickerComponent implements OnInit {
   }
 
   private setLastValidDate(): void {
-    let date = new Date(this.year, this.month, this.day, this.hour, this.minute, this.second);
+    const date = new Date(this.year, this.month, this.day, this.hour, this.minute, this.second);
     if (this.isEnabled(date.getDate(), true)) {
       this.setNextValidDate(date);
     } else {
@@ -551,7 +551,7 @@ export class DatetimePickerComponent implements OnInit {
 
   private changeViewData(): void {
     this.setLastValidDate();
-    let date = new Date(this.year, this.month, this.day, this.hour, this.minute, this.second);
+    const date = new Date(this.year, this.month, this.day, this.hour, this.minute, this.second);
 
     if (this.dateEnabled) {
       this.year = date.getFullYear();
@@ -589,7 +589,7 @@ export class DatetimePickerComponent implements OnInit {
 
   private createDate(stringDate: string): Date {
     let date = new Date(stringDate);
-    let isInvalidDate = isNaN(date.getTime());
+    const isInvalidDate = isNaN(date.getTime());
     if (isInvalidDate) {
       date = new Date(); // today
     }

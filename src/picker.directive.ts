@@ -52,8 +52,8 @@ export class DatetimePickerDirective {
     }
     pickerOptions.subTitle = this.subTitle;
 
-    let val = this.input.value || {};
-    let now = new Date();
+    const val = this.input.value || {};
+    const now = new Date();
     pickerOptions.modelDate = new Date(
       val.year || (pickerOptions.dateEnabled ? now.getFullYear() : 2018),
       val.month ? val.month - 1 : (pickerOptions.dateEnabled ? now.getMonth() : 0),

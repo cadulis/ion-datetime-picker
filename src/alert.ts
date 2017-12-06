@@ -34,7 +34,7 @@ export class DatetimePickerAlert extends ViewController {
   }
 
   public getTransitionName(direction: string): string {
-    let key = (direction === "back" ? "alertLeave" : "alertEnter");
+    const key = (direction === "back" ? "alertLeave" : "alertEnter");
     return this._nav && this._nav.config.get(key);
   }
 
@@ -68,9 +68,6 @@ export class DatetimePickerAlert extends ViewController {
   }
 
   public refresh() {
-    console.assert(!!this._cmp, "componentRef must be valid");
-    console.assert(!!this._cmp.instance.refresh, "instance must implement refresh()");
-
     if (this._cmp && this._cmp.instance.refresh) {
       this._cmp.instance.refresh();
     }

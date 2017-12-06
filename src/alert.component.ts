@@ -14,8 +14,8 @@ import { DatetimePickerAlertOptions } from "./alert.options";
         <h2 id="{{hdrId}}" class="alert-title" *ngIf="d.title" [innerHTML]="d.title"></h2>
         <h3 id="{{subHdrId}}" class="alert-sub-title" *ngIf="d.subTitle" [innerHTML]="d.subTitle"></h3>
       </div>
-      <ion-datetime-picker [modelDate]="d.modelDate" [dateEnabled]="d.dateEnabled" [timeEnabled]="d.timeEnabled" [isMondayFirst]="d.isMondayFirst" 
-        [secondsEnabled]="d.secondsEnabled" [meridiemEnabled]="d.meridiemEnabled" [onlyValid]="d.onlyValid" [monthNames]="d.monthNames" 
+      <ion-datetime-picker [modelDate]="d.modelDate" [dateEnabled]="d.dateEnabled" [timeEnabled]="d.timeEnabled" [isMondayFirst]="d.isMondayFirst"
+        [secondsEnabled]="d.secondsEnabled" [meridiemEnabled]="d.meridiemEnabled" [onlyValid]="d.onlyValid" [monthNames]="d.monthNames"
         [weekdayNames]="d.weekdayNames" [minuteValues]="d.minuteValues" (pickerChange)="onChange($event)"></ion-datetime-picker>
       <div class="alert-button-group" [ngClass]="{'alert-button-group-vertical':d.buttons.length>2}">
         <button ion-button="alert-button" *ngFor="let b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass">
