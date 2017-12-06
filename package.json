@@ -1,6 +1,6 @@
 {
   "name": "cadulis-ion-datetime-picker",
-  "version": "0.5.8-ionic3",
+  "version": "0.5.9-ionic3",
   "description": "Date and/or time picker for awesome ionic framework",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
